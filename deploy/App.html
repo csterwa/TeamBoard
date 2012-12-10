@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TeamBoard</title>
+
+    <script type="text/javascript" src="/apps/2.0p/sdk.js"></script>
+
+    <script type="text/javascript">
+        Rally.onReady(function() {
+            Ext.define('CustomApp', {
+                extend:'Rally.app.App',
+                componentCls:'app',
+            
+                items:[
+                    {
+                        xtype:'teamboard',
+                        teams:[
+                            {
+                                name:'Rampson & Sons',
+                                po:['Susan Rampson'],
+                                qa:['Eric Frank'],
+                                lead:['Mike Rampson'],
+                                dev:['Andrew Homeyer', 'Doug Alcouffe', 'Todd Hooper', 'Neeraj Khadakkar', 'Nicholas Boll']
+                            },
+                            {
+                                name:'Mr. Rogers',
+                                po:['Steve Stolt'],
+                                qa:['Wayne Goyer'],
+                                lead:['Alan Brockett'],
+                                dev:['Ashly Simmons', 'Brandon Fryslie', 'Erika Brice', 'Garston Tremblay', 'Kyle Morse']
+                            },
+                            {
+                                name:'Sample Project',
+                                po:['Steve Stolt'],
+                                qa:['Karla Alves'],
+                                lead:['Justin Livesay'],
+                                dev:['Dave Thompson', 'Ben Ridge', 'Matt Novinger']
+                            },
+                            {
+                                name:'GUI Donut',
+                                po:['Steve Stolt'],
+                                lead:['Ryan Scott'],
+                                dev:['Matt Parish', 'Matt Greer', 'Luke Mueller']
+            
+                            },
+                            {
+                                name:'2!||!2!',
+                                po:['Melissa Gallegos'],
+                                qa:['Mike Stieber'],
+                                lead:['Katie Thompson'],
+                                dev:['Stephanie Tanner', 'Sarah Tipton', 'Brett Davidson', 'Carlton Schuyler', 'Rick Lansky']
+                            },
+                            {
+                                name:'Crazy Train',
+                                po:['Allen Barksdale'],
+                                qa:['Dina Whelan'],
+                                lead:['Tom Roper'],
+                                dev:['Stefan Kendall', 'Steven Boles', 'Alan Hensel', 'Matt McClellan']
+                            },
+                            {
+                                name:'The A-Team',
+                                po:['Allen Barksdale'],
+                                qa:[],
+                                lead:['Jeff Ellis'],
+                                dev:['Joel Sherriff', 'Curt Tudor', 'Erik Lifka', 'Rob West', 'Omar Estrella (1/7/13)']
+                            },
+                            {
+                                name:'Red Pill',
+                                po:['Larry Macherone'],
+                                lead:['Mark Smith'],
+                                dev:['Michael Dellanoce (12/3/12)']
+                            },
+                            {
+                                name:'Magellan',
+                                po:['Susan Rampson'],
+                                qa:[],
+                                lead:['Chris Sterling'],
+                                dev:['Kendrick Burson', 'Matt Cholick', 'Mickey Phoenix', 'Ken Heutmaker', { xtype:'teamopening', name:'Developer' }]
+                            },
+                            {
+                                name:'The Gozerians',
+                                po:['Eric Shiflet'],
+                                qa:['Charlie Spear'],
+                                lead:['Adam Esterline'],
+                                dev:['Steve Neely', 'Jake Pearson', 'Erik Siefkas', 'Chris Perkins']
+                            },
+                            {
+                                name:'The Fellowship',
+                                po:['Eric Shiflet'],
+                                qa:[],
+                                lead:['Jeff Smith'],
+                                dev:['Eli Klein', 'Russ Teabeault', 'Matt Farrar', 'Carolina Weibring', { xtype:'teamopening', name:'Jr Ops Eng' }]
+                            },
+                            {
+                                name:'PainInTheArch',
+                                po:['Eric Shiflet'],
+                                qa:['Sheri Quarfoot'],
+                                lead:['Robb Lee'],
+                                dev:['Jacob Burton', 'JC Tierney', 'Katy Groves']
+                            },
+                            {
+                                name:'Leather Pants',
+                                po:['Jim Campbell'],
+                                qa:['Roland Wettstein'],
+                                lead:['Ian Whitmore'],
+                                dev:['Brian Dupras', 'Michael Bulkeley', 'Kip Lehman', 'David Smith',
+                                    { xtype:'person', name:'Scott Lehman', notes:'Contractor' }, { xtype:'teamopening', name:'Developer' }   ]
+                            }
+                        ]
+                    },
+                    {
+                        xtype:'teamboard',
+                        width:300,
+                        enforceMinimums:false,
+                        teams:[
+                            {
+                                name:'Team Rotations',
+                                qa:[],
+                                dev:[
+                                    { xtype:'person', name:'Omar Sulehria', notes:'Intern' }
+                                ]
+                            },
+                            {
+                                name:'New Hires',
+                                dev:[]
+                            }
+                        ]
+                    }
+                ]
+            
+            });            Ext.define('Person', {
+                extend:'Ext.Component',
+                alias:'widget.person',
+                componentCls:'person',
+                renderTpl:['<div>{name}</div>',
+                    '<tpl if="notes">',
+                    '<div class="notes">{notes}</div>',
+                    '</tpl>'],
+            
+                constructor:function (config, role) {
+                    if (Ext.isString(config)) {
+                        config = {
+                            name:config
+                        };
+                    }
+                    config.role = role;
+            
+                    Ext.apply(this, config);
+            
+                    this.callParent();
+                },
+            
+                initComponent:function () {
+                    this.cls = [this.cls || '', this.role].join(' ');
+                    this.renderData = this;
+                    this.callParent();
+                }
+            });            Ext.define('Placeholder', {
+                extend:'Person',
+                alias:'widget.placeholder',
+                cls:'placeholder',
+                name:'&nbsp;'
+            });            Ext.define('TeamBoard', {
+                extend:'Ext.container.Container',
+                alias:'widget.teamboard',
+                layout:'hbox',
+            
+                enforceMinimums:true,
+            
+                initComponent:function () {
+                    this.items = [];
+            
+                    Ext.Array.each(this.teams, function (team) {
+                        var people = [];
+            
+                        this._addRole(people, team, 'po');
+                        this._addRole(people, team, 'qa');
+                        this._addRole(people, team, 'lead');
+                        this._addRole(people, team, 'dev');
+            
+                        this.items.push({
+                            ui:'none',
+                            cls:'team',
+                            xtype:'panel',
+                            title:team.name,
+                            flex:1,
+                            items:people
+                        });
+                    }, this);
+            
+                    this.callParent();
+                },
+            
+                _addRole:function (items, team, type) {
+                    var people = [];
+            
+                    Ext.Array.each(team[type], function (person) {
+                        if (!(person instanceof TeamOpening) && person.xtype !== 'teamopening') {
+                            person = new Person(person, type);
+                        }
+                        people.push(person);
+                    }, this);
+            
+                    if (this.enforceMinimums) {
+                        var minimums = {
+                            po:1,
+                            qa:1,
+                            lead:1
+                        };
+                        if (minimums[type]) {
+                            while (minimums[type] > people.length) {
+                                people.push({
+                                    xtype:'placeholder'
+                                });
+                            }
+                        }
+                    }
+            
+                    Ext.Array.each(people, function (person) {
+                        items.push(person);
+                    });
+                }
+            });            Ext.define('TeamOpening', {
+                extend:'Person',
+                alias:'widget.teamopening',
+                cls:'opening'
+            });
+            Rally.launchApp('CustomApp', {
+                name: 'TeamBoard'
+            });
+        });
+    </script>
+
+    <style type="text/css">
+        
+        .app, .app .x-panel-body {
+            font-size: 12px;
+        }
+        
+        .app .team .x-panel-header {
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .app .person {
+            border: 1px solid #ccc;
+            margin: 3px;
+            padding: 15px 5px 20px 5px;
+            text-align: center;
+            color: #333;
+            position: relative;
+        }
+        
+        .app .person .notes {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            font-size: 10px;
+            border: 1px solid #DDD;
+            border-right: 0;
+            border-bottom: 0;
+            padding: 2px;
+        }
+        
+        .app .person.po {
+            background-color: #fbedca;
+        }
+        
+        .app .person.dev {
+            background-color: #eff8fb;
+        }
+        
+        .app .person.lead {
+            background-color: #b5d8eb;
+        }
+        
+        .app .person.qa {
+            background-color: #e3f9e9;
+        }
+        
+        .app .person.opening {
+            border: 1px dashed #EF3F35;
+            color: #000;
+            background-color: #FCB5B1;
+        }
+        
+        .app .person.placeholder {
+            border: 0;
+            margin: 4px;
+        }    </style>    </style>
+</head>
+<body></body>
+</html>

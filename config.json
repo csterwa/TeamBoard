@@ -1,0 +1,16 @@
+{
+    "name": "TeamBoard",
+    "className": "CustomApp",
+    "server": "rally1.rallydev.com",
+    "sdk": "2.0p",
+    "javascript": [
+        "App.js",
+        "Person.js",
+        "Placeholder.js",
+        "TeamBoard.js",
+        "TeamOpening.js"
+    ],
+    "css": [
+        "app.css"
+    ]
+}
