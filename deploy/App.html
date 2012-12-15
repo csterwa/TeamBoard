@@ -16,95 +16,11 @@
                         xtype:'teamboard',
                         teams:[
                             {
-                                name:'Rampson & Sons',
-                                po:['Susan Rampson'],
-                                qa:['Eric Frank'],
-                                lead:['Mike Rampson'],
-                                dev:['Andrew Homeyer', 'Doug Alcouffe', 'Todd Hooper', 'Neeraj Khadakkar', 'Nicholas Boll']
-                            },
-                            {
-                                name:'Mr. Rogers',
-                                po:['Steve Stolt'],
-                                qa:['Wayne Goyer'],
-                                lead:['Alan Brockett'],
-                                dev:['Ashly Simmons', 'Brandon Fryslie', 'Erika Brice', 'Garston Tremblay', 'Kyle Morse']
-                            },
-                            {
-                                name:'Sample Project',
-                                po:['Steve Stolt'],
-                                qa:['Karla Alves'],
-                                lead:['Justin Livesay'],
-                                dev:['Dave Thompson', 'Ben Ridge', 'Matt Novinger']
-                            },
-                            {
-                                name:'GUI Donut',
-                                po:['Steve Stolt'],
-                                lead:['Ryan Scott'],
-                                dev:['Matt Parish', 'Matt Greer', 'Luke Mueller']
-            
-                            },
-                            {
-                                name:'2!||!2!',
-                                po:['Melissa Gallegos'],
-                                qa:['Mike Stieber'],
-                                lead:['Katie Thompson'],
-                                dev:['Stephanie Tanner', 'Sarah Tipton', 'Brett Davidson', 'Carlton Schuyler', 'Rick Lansky']
-                            },
-                            {
-                                name:'Crazy Train',
-                                po:['Allen Barksdale'],
-                                qa:['Dina Whelan'],
-                                lead:['Tom Roper'],
-                                dev:['Stefan Kendall', 'Steven Boles', 'Alan Hensel', 'Matt McClellan']
-                            },
-                            {
-                                name:'The A-Team',
-                                po:['Allen Barksdale'],
-                                qa:[],
-                                lead:['Jeff Ellis'],
-                                dev:['Joel Sherriff', 'Curt Tudor', 'Erik Lifka', 'Rob West', 'Omar Estrella (1/7/13)']
-                            },
-                            {
-                                name:'Red Pill',
-                                po:['Larry Macherone'],
-                                lead:['Mark Smith'],
-                                dev:['Michael Dellanoce (12/3/12)']
-                            },
-                            {
-                                name:'Magellan',
-                                po:['Susan Rampson'],
-                                qa:[],
-                                lead:['Chris Sterling'],
-                                dev:['Kendrick Burson', 'Matt Cholick', 'Mickey Phoenix', 'Ken Heutmaker', { xtype:'teamopening', name:'Developer' }]
-                            },
-                            {
-                                name:'The Gozerians',
-                                po:['Eric Shiflet'],
-                                qa:['Charlie Spear'],
-                                lead:['Adam Esterline'],
-                                dev:['Steve Neely', 'Jake Pearson', 'Erik Siefkas', 'Chris Perkins']
-                            },
-                            {
-                                name:'The Fellowship',
-                                po:['Eric Shiflet'],
-                                qa:[],
-                                lead:['Jeff Smith'],
-                                dev:['Eli Klein', 'Russ Teabeault', 'Matt Farrar', 'Carolina Weibring', { xtype:'teamopening', name:'Jr Ops Eng' }]
-                            },
-                            {
-                                name:'PainInTheArch',
-                                po:['Eric Shiflet'],
-                                qa:['Sheri Quarfoot'],
-                                lead:['Robb Lee'],
-                                dev:['Jacob Burton', 'JC Tierney', 'Katy Groves']
-                            },
-                            {
-                                name:'Leather Pants',
-                                po:['Jim Campbell'],
-                                qa:['Roland Wettstein'],
-                                lead:['Ian Whitmore'],
-                                dev:['Brian Dupras', 'Michael Bulkeley', 'Kip Lehman', 'David Smith',
-                                    { xtype:'person', name:'Scott Lehman', notes:'Contractor' }, { xtype:'teamopening', name:'Developer' }   ]
+                                name:'Team 1',
+                                po:['Wong fe Hung'],
+                                qa:['Jimmy'],
+                                lead:['Billy'],
+                                dev:['Thing 1', 'Thing 2']
                             }
                         ]
                     },
@@ -117,12 +33,12 @@
                                 name:'Team Rotations',
                                 qa:[],
                                 dev:[
-                                    { xtype:'person', name:'Omar Sulehria', notes:'Intern' }
+                                    { xtype:'person', name:'Chupacabra', notes:'Intern' }
                                 ]
                             },
                             {
                                 name:'New Hires',
-                                dev:[]
+                                dev:['Nova Jones']
                             }
                         ]
                     }
@@ -173,10 +89,10 @@
                     Ext.Array.each(this.teams, function (team) {
                         var people = [];
             
-                        this._addRole(people, team, 'po');
-                        this._addRole(people, team, 'qa');
-                        this._addRole(people, team, 'lead');
-                        this._addRole(people, team, 'dev');
+                        this.addJobRole(people, team, 'po');
+                        this.addJobRole(people, team, 'qa');
+                        this.addJobRole(people, team, 'lead');
+                        this.addJobRole(people, team, 'dev');
             
                         this.items.push({
                             ui:'none',
@@ -191,7 +107,7 @@
                     this.callParent();
                 },
             
-                _addRole:function (items, team, type) {
+                addJobRole:function (items, team, type) {
                     var people = [];
             
                     Ext.Array.each(team[type], function (person) {
