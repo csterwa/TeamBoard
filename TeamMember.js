@@ -24,9 +24,9 @@
         },
         getField:function(fieldName) {
             if (this.fields.contains(fieldName)) {
-                return this.get(fieldName);
+                return null;
             } else {
-                return this.get("userRef");
+                return this.fields.get(fieldName);
             }
         }
     });
