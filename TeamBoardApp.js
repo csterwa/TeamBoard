@@ -19,8 +19,10 @@ Ext.define('Rally.app.teamboard.App', {
                     this.add({
                         xtype:'rallycardboard',
                         cardConfig:{
-                            xtype:"rallyteamcard",
-                            fields:['userRef']
+                            fields:['userRef'],
+                            plugins:[
+                                {ptype:'rallycardcontent'}
+                            ]
                         },
                         context:this.getContext(),
                         columns:this._getColumns(teams),
@@ -31,7 +33,8 @@ Ext.define('Rally.app.teamboard.App', {
                             recordupdate:this._publishContentUpdatedNoDashboardLayout,
                             recordcreate:this._publishContentUpdatedNoDashboardLayout,
                             scope:this
-                        }
+                        },
+                        types:['Rally.team.data.model.TeamMember']
                     });
                 },
                 scope:this

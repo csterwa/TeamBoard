@@ -10,7 +10,6 @@
         "TeamMember.js",
         "Team.js",
         "TeamBoardColumn.js",
-        "TeamBoardCard.js",
         "lib/deft.js"
     ],
     "css": [
