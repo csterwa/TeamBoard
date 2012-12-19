@@ -5,7 +5,13 @@
     "sdk": "2.0p5",
     "javascript": [
         "TeamBoardApp.js",
-        "TeamBoardColumn.js"
+        "RallyServiceProxyConfig.js",
+        "JobRole.js",
+        "TeamMember.js",
+        "Team.js",
+        "TeamBoardColumn.js",
+        "TeamBoardCard.js",
+        "lib/deft.js"
     ],
     "css": [
         "app.css"
