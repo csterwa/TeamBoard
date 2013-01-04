@@ -23,9 +23,8 @@ Ext.define('Rally.app.teamboard.App', {
 
     _loadTeamBoard:function (teams) {
         this.teamBoard = Ext.create('Rally.ui.cardboard.CardBoard', {
-            attribute: 'userRef',
             cardConfig:{
-                fields:['userRef'],
+                fields:['EmailAddress', 'FirstName', 'LastName', 'UserName'],
                 plugins:[
                     {ptype:'rallycardcontent'}
                 ]
@@ -33,7 +32,8 @@ Ext.define('Rally.app.teamboard.App', {
             maskMsg: 'Loading Team Member Data...',
             maskTarget: this,
             columns:this._getColumns(teams),
-            enableRanking:false
+            enableRanking:false,
+            types:['User']
         });
 
         this.add(this.teamBoard);

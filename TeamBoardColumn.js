@@ -8,12 +8,9 @@ Ext.define('Rally.app.teamboard.TeamBoardColumn', {
         this.projectModel = Rally.data.ModelFactory.getModel({
             type: 'Project',
             success: function(model) {
-
                 var oid = Rally.util.Ref.getOidFromRef(config.teamRecord.get('projectRef'));
-
                 model.load(oid, {
                     success: function(record) {
-                        debugger;
                         config = Ext.apply({
                             displayValue: record.get('Name')
                         }, config);
@@ -40,12 +37,29 @@ Ext.define('Rally.app.teamboard.TeamBoardColumn', {
     },
 
     _queryForData:function () {
-        var cards = [];
         var teamMemberStore = this.teamRecord.teamMembers();
         teamMemberStore.each(function (teamMember) {
-            cards.push(teamMember)
+            Rally.data.ModelFactory.getModel({
+                type: 'User',
+                success: function(model) {
+                    var oid = Rally.util.Ref.getOidFromRef(teamMember.get('userRef'));
+                    model.load(oid, {
+                        success: function(record) {
+                            this.createAndAddCard(record);
+                        },
+                        failure: function() {
+                            //if the project doesn't exist or we don't have access to it.
+                            //let our owner handle the error situation.
+                            this.fireEvent('invalidvalue');
+                        },
+                        fetch: ['EmailAddress', 'FirstName', 'LastName', 'UserName'],
+                        scope: this
+                    });
+
+                },
+                scope: this
+            });
         }, this);
-        this.createAndAddCards(cards);
     }
 
 });
