@@ -4,12 +4,12 @@
     "server": "rally1.rallydev.com",
     "sdk": "2.0p5",
     "javascript": [
-        "TeamBoardApp.js",
         "RallyServiceProxyConfig.js",
         "JobRole.js",
         "TeamMember.js",
         "Team.js",
         "TeamBoardColumn.js",
+        "TeamBoardApp.js",
         "lib/deft.js"
     ],
     "css": [

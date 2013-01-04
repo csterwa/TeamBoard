@@ -15,31 +15,28 @@ Ext.define('Rally.app.teamboard.App', {
             },
             autoLoad:true,
             listeners:{
-                load:function (teams) {
-                    this.add({
-                        xtype:'rallycardboard',
-                        cardConfig:{
-                            fields:['userRef'],
-                            plugins:[
-                                {ptype:'rallycardcontent'}
-                            ]
-                        },
-                        context:this.getContext(),
-                        columns:this._getColumns(teams),
-                        enableRanking:false,
-                        listeners:{
-                            load:this._publishContentUpdated,
-                            toggle:this._publishContentUpdated,
-                            recordupdate:this._publishContentUpdatedNoDashboardLayout,
-                            recordcreate:this._publishContentUpdatedNoDashboardLayout,
-                            scope:this
-                        },
-                        types:['Rally.team.data.model.TeamMember']
-                    });
-                },
+                load:this._loadTeamBoard,
                 scope:this
             }
         });
+    },
+
+    _loadTeamBoard:function (teams) {
+        this.teamBoard = Ext.create('Rally.ui.cardboard.CardBoard', {
+            attribute: 'userRef',
+            cardConfig:{
+                fields:['userRef'],
+                plugins:[
+                    {ptype:'rallycardcontent'}
+                ]
+            },
+            maskMsg: 'Loading Team Member Data...',
+            maskTarget: this,
+            columns:this._getColumns(teams),
+            enableRanking:false
+        });
+
+        this.add(this.teamBoard);
     },
 
     _getColumns:function (teams) {
@@ -50,14 +47,7 @@ Ext.define('Rally.app.teamboard.App', {
                 teamRecord:team
             });
         });
-        return columns
+        return columns;
     },
 
-    _publishContentUpdated:function () {
-        this.fireEvent('contentupdated');
-    },
-
-    _publishContentUpdatedNoDashboardLayout:function () {
-        this.fireEvent('contentupdated', {dashboardLayout:false});
-    }
 });

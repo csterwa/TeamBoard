@@ -17,7 +17,7 @@
             foreignKey:'jobRole'
         },
         isFieldVisible:function (field) {
-            return true;
+            return false;
         },
         isCustomField:function (field) {
             return false;
