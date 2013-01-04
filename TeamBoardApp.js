@@ -4,15 +4,6 @@ Ext.define('Rally.app.teamboard.App', {
     launch:function () {
         this.teamStore = Ext.create('Ext.data.Store', {
             model:Rally.team.data.model.Team,
-            proxy:{
-                type:'jsonp',
-                url:'http://localhost:8080/team-service/api/team',
-                callbackKey:'jsonp',
-                reader:{
-                    type:'json',
-                    root:'data.results'
-                }
-            },
             autoLoad:true,
             listeners:{
                 load:this._loadTeamBoard,
@@ -24,7 +15,7 @@ Ext.define('Rally.app.teamboard.App', {
     _loadTeamBoard:function (teams) {
         this.teamBoard = Ext.create('Rally.ui.cardboard.CardBoard', {
             cardConfig:{
-                fields:['EmailAddress', 'FirstName', 'LastName', 'UserName'],
+                fields:['DisplayName', 'EmailAddress', 'FirstName', 'LastName', 'UserName'],
                 plugins:[
                     {ptype:'rallycardcontent'}
                 ]

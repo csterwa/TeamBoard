@@ -6,6 +6,7 @@
      */
     Ext.define('Rally.team.data.model.Team', {
         extend:'Ext.data.Model',
+        proxy:new Rally.team.data.RallyServiceProxyConfig('http://localhost:8080/team-service/api/team').getProxyConfig(),
         fields:[
             'id',
             'projectRef'

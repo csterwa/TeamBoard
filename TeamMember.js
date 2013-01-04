@@ -6,16 +6,13 @@
      */
     Ext.define('Rally.team.data.model.TeamMember', {
         extend:'Ext.data.Model',
+        proxy:new Rally.team.data.RallyServiceProxyConfig('http://localhost:8080/team-service/api/teammember').getProxyConfig(),
         fields:[
             'id',
-            'userRef'
+            'userRef',
+            'jobRoleId'
         ],
         belongsTo:'Rally.team.data.model.Team',
-        hasOne:{
-            associationKey:'jobRole',
-            model:'Rally.team.data.model.JobRole',
-            foreignKey:'jobRole'
-        },
         isFieldVisible:function (field) {
             return false;
         },
