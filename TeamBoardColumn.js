@@ -67,6 +67,6 @@ Ext.define('Rally.app.teamboard.TeamBoardColumn', {
             fetch:['DisplayName', 'EmailAddress', 'FirstName', 'LastName', 'UserName'],
             scope:this
         });
-    },
+    }
 
 });
